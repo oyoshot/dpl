@@ -189,3 +189,13 @@ ZH - Chinese (simplified)
         Ok(())
     }
 }
+
+pub fn print_config(config_file_path: &PathBuf) -> Result<()> {
+    match DplConfig::load_config_as_str(config_file_path) {
+        Some(config) => {
+            println!("\n{}", config);
+            return Ok(());
+        }
+        None => Err(anyhow!("cannot print config")),
+    }
+}

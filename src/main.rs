@@ -4,7 +4,7 @@ mod directories;
 
 use anyhow::Result;
 use clap::{Parser, Subcommand};
-use config::{config_file_path, DplConfig};
+use config::{config_file_path, print_config, DplConfig};
 use deepl::deepl;
 use directories::PROJECT_DIRS;
 
@@ -38,6 +38,10 @@ enum SubCommands {
         #[clap(long, exclusive = true)]
         init: bool,
 
+        /// Print the current configuration
+        #[clap(long, exclusive = true)]
+        print: bool,
+
         /// Set Endpoint in configuration file
         #[clap(long)]
         endpoint: Option<String>,
@@ -70,12 +74,16 @@ fn run() -> Result<bool> {
     match &cli.subcommand {
         Some(SubCommands::Config {
             init,
+            print,
             endpoint,
             api_key,
             default_lang,
         }) => {
             if *init {
                 DplConfig::generate_config(&config_file_path)?;
+            }
+            if *print {
+                print_config(&config_file_path)?;
             }
             if let Some(endpoint) = endpoint {
                 DplConfig::update_config(&config_file_path, "endpoint", endpoint)?;

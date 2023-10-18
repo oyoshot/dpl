@@ -19,7 +19,6 @@ use std::process;
 )]
 struct Cli {
     /// Text to be translated
-    #[arg(short = 't', long = "text")]
     text: Option<String>,
 
     /// Target language

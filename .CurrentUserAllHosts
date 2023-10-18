@@ -1,0 +1,6 @@
+[System.Environment]::SetEnvironmentVariable('HOMEBREW_PREFIX','/opt/homebrew',[System.EnvironmentVariableTarget]::Process)
+[System.Environment]::SetEnvironmentVariable('HOMEBREW_CELLAR','/opt/homebrew/Cellar',[System.EnvironmentVariableTarget]::Process)
+[System.Environment]::SetEnvironmentVariable('HOMEBREW_REPOSITORY','/opt/homebrew',[System.EnvironmentVariableTarget]::Process)
+[System.Environment]::SetEnvironmentVariable('PATH',$('/opt/homebrew/bin:/opt/homebrew/sbin:'+$ENV:PATH),[System.EnvironmentVariableTarget]::Process)
+[System.Environment]::SetEnvironmentVariable('MANPATH',$('/opt/homebrew/share/man'+$(if(${ENV:MANPATH}){':'+${ENV:MANPATH}})+':'),[System.EnvironmentVariableTarget]::Process)
+[System.Environment]::SetEnvironmentVariable('INFOPATH',$('/opt/homebrew/share/info'+$(if(${ENV:INFOPATH}){':'+${ENV:INFOPATH}})),[System.EnvironmentVariableTarget]::Process)

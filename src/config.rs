@@ -38,7 +38,7 @@ impl DplConfig {
         Ok(s)
     }
 
-    pub fn load_config_as_str(config_file_path: &PathBuf) -> Option<String> {
+    fn load_config_as_str(config_file_path: &PathBuf) -> Option<String> {
         if !config_file_path.is_file() {
             eprintln!(
                 "Configuration file not found at: {}",
@@ -85,7 +85,7 @@ impl DplConfig {
         }
 
         println!(
-            "Free and Pro, which option did you go with? <See, https://www.deepl.com/pro-api>
+            "\nFree and Pro, which option did you go with? <See, https://www.deepl.com/pro-api>
 DeepL API Pro: {DEEPL_ENDPOINT_PRO}
 DeepL API Free: {DEEPL_ENDPOINT_FREE}"
         );
@@ -103,7 +103,7 @@ DeepL API Free: {DEEPL_ENDPOINT_FREE}"
         };
 
         println!(
-            "Register your API key. You can get it here <https://www.deepl.com/account/summary>"
+            "\nRegister your API key. You can get it here <https://www.deepl.com/account/summary>"
         );
 
         println!("API key: ");
@@ -112,7 +112,7 @@ DeepL API Free: {DEEPL_ENDPOINT_FREE}"
         io::stdin().read_line(&mut api_key)?;
 
         println!(
-            "The language into which the text should be translated. Options currently available:
+            "\nThe language into which the text should be translated. Options currently available:
 
 BG - Bulgarian
 CS - Czech
@@ -148,8 +148,7 @@ TR - Turkish
 UK - Ukrainian
 ZH - Chinese (simplified)
 
-<See, https://www.deepl.com/docs-api/translate-text>
-"
+<See, https://www.deepl.com/docs-api/translate-text>"
         );
 
         println!("Default target language: ");
@@ -166,14 +165,14 @@ ZH - Chinese (simplified)
 
         fs::write(&config_file_path, toml).map_err(|e| {
             anyhow!(
-                "Failed to create config file at '{}': {}",
+                "\nFailed to create config file at '{}': {}",
                 config_file_path.to_string_lossy(),
                 e
             )
         })?;
 
         println!(
-            "Success! Config file written to {}",
+            "\nSuccess! Config file written to {}",
             config_file_path.to_string_lossy()
         );
 

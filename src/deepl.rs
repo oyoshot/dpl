@@ -36,7 +36,7 @@ pub async fn deepl(endpoint: &str, api_key: &str, message: &str, lang: &str) -> 
     }
 
     let p: DeeplResponse = serde_json::from_str(&res.text().await?)?;
-    println!("{}", &p.translations[0].text);
+    println!("\n{}", &p.translations[0].text);
 
     Ok(())
 }

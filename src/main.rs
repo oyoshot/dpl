@@ -4,7 +4,7 @@ mod directories;
 
 use anyhow::Result;
 use clap::{Parser, Subcommand};
-use config::{config_file_path, print_config, DplConfig};
+use config::{config_file_path, generate_config, print_config, update_config, DplConfig};
 use deepl::deepl;
 use directories::PROJECT_DIRS;
 
@@ -61,7 +61,7 @@ fn run() -> Result<bool> {
     let cli = Cli::parse();
 
     if let Some(text) = cli.text.as_deref() {
-        let config = DplConfig::load_config(&config_file_path)?;
+        let config = DplConfig::initialize(&config_file_path);
         let lang = match cli.lang.as_deref() {
             Some(_) => cli.lang.unwrap(),
             None => config.default_lang,
@@ -80,19 +80,19 @@ fn run() -> Result<bool> {
             default_lang,
         }) => {
             if *init {
-                DplConfig::generate_config(&config_file_path)?;
+                generate_config(&config_file_path)?;
             }
             if *print {
                 print_config(&config_file_path)?;
             }
             if let Some(endpoint) = endpoint {
-                DplConfig::update_config(&config_file_path, "endpoint", endpoint)?;
+                update_config(&config_file_path, "endpoint", endpoint)?;
             }
             if let Some(api_key) = api_key {
-                DplConfig::update_config(&config_file_path, "api_key", api_key)?;
+                update_config(&config_file_path, "api_key", api_key)?;
             }
             if let Some(default_lang) = default_lang {
-                DplConfig::update_config(&config_file_path, "default_lang", default_lang)?;
+                update_config(&config_file_path, "default_lang", default_lang)?;
             }
         }
         None => {}

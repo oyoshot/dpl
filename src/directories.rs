@@ -10,9 +10,7 @@ impl DplDir {
     fn new() -> Option<DplDir> {
         let strategy = choose_base_strategy().ok()?;
         let config_dir = strategy.config_dir().join("dpl");
-        Some(DplDir {
-            config_dir: config_dir,
-        })
+        Some(DplDir { config_dir })
     }
 
     pub fn config_dir(&self) -> &Path {

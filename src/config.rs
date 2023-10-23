@@ -26,7 +26,7 @@ pub struct DplConfig {
 impl DplConfig {
     pub fn initialize(config_file_path: &PathBuf) -> Self {
         Self::load_config(config_file_path)
-            .unwrap()
+            .expect("Cannot load config file.")
             .try_into()
             .unwrap_or_default()
     }
@@ -37,7 +37,7 @@ impl DplConfig {
             Ok(parsed) => Some(parsed),
             Err(e) => {
                 eprint!("{}", e);
-                return None;
+                None
             }
         }
     }
@@ -55,7 +55,7 @@ impl DplConfig {
             Ok(v) => Some(v),
             Err(e) => {
                 eprintln!("cannot read config file as toml string. {}", e);
-                return None;
+                None
             }
         }
     }
@@ -168,7 +168,7 @@ ZH - Chinese (simplified)
     };
     let toml = toml::to_string(&config)?;
 
-    fs::write(&config_file_path, toml).map_err(|e| {
+    fs::write(config_file_path, toml).map_err(|e| {
         anyhow!(
             "\nFailed to create config file at '{}': {}",
             config_file_path.to_string_lossy(),
@@ -196,7 +196,7 @@ pub fn print_config(config_file_path: &PathBuf) -> Result<()> {
     match DplConfig::load_config_as_str(config_file_path) {
         Some(config) => {
             println!("\n{}", config);
-            return Ok(());
+            Ok(())
         }
         None => Err(anyhow!("cannot print config")),
     }
